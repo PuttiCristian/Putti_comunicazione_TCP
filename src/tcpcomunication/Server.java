@@ -5,6 +5,8 @@
 package tcpcomunication;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -49,11 +51,25 @@ public class Server {
         }
         
         public void leggi() {
+        InputStream i;
+        try {
+            i = clientSocket.getInputStream();
+            i.read();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         }
         
         public void scrivi() {
-        
+            OutputStream o;
+        try {
+             o = clientSocket.getOutputStream();
+             o.write(1);
+             o.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
         
         public void chiudi() {
