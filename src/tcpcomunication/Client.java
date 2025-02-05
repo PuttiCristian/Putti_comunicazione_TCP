@@ -5,6 +5,8 @@
 package tcpcomunication;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -38,11 +40,23 @@ public class Client {
         }
   }
     public void leggi() {
-    
+       InputStream i;
+        try {
+            i = socket.getInputStream();
+            i.read();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void scrivi() {
-    
+         try {
+             OutputStream o = socket.getOutputStream();
+             o.write(1);
+             o.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void chiudi() {
