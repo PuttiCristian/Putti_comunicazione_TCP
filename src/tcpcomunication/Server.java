@@ -7,6 +7,7 @@ package tcpcomunication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -32,6 +33,10 @@ public class Server {
         try{
             serverSocket = new ServerSocket(porta);
             System.out.println("1) SERVER IN ASCOLTO");
+        } catch(BindException ex) {
+            System.out.println("porta occupata");
+        } catch(IllegalArgumentException ex) {
+             System.out.println("numero di porta non valido");
         }
         catch(IOException ex){
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
