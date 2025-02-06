@@ -82,6 +82,10 @@ public class Server {
         }
         
         public void termina() {
-        
+        try {
+            serverSocket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
         }
     }
