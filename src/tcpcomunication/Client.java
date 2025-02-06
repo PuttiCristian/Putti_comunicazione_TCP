@@ -31,7 +31,7 @@ public class Client {
             socket = new Socket(nomeServer, porta);
             System.out.println("1) CONNESSIONE AVVENUTA CON IL SERVER");
         } catch(ConnectException ex){
-            System.out.println("errore Server");
+            System.out.println("errore connessione Server");
         } catch(UnknownHostException ex){
             System.out.println("errore risoluzione del nome");
         }catch (IOException ex) {
