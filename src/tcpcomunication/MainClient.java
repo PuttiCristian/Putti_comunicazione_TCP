@@ -14,8 +14,9 @@ public class MainClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Client c = new Client("localost");
-        c.connetti("localhost", 2006);
+        Client c = new Client("localhost");
+        c.connetti("localhost", 50005);
+       // c.leggi();
         //c.scrivi();
         c.chiudi();
     }
