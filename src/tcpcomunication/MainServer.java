@@ -22,8 +22,8 @@ public class MainServer {
         scanner.close();
        for(int i=0; i<nClient; i++) {
        s.attendi();
-       //s.leggi();
-       //s.scrivi();
+       s.leggi();
+       s.scrivi();
        s.chiudi();
     }
       s.termina();

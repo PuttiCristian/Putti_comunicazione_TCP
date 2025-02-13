@@ -7,9 +7,11 @@ package tcpcomunication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,13 +29,22 @@ public class Server {
     ServerSocket serverSocket;
     Socket clientSocket;
     int porta;
+    InputStream is;
+    OutputStream os;
+    PrintWriter streamOut = null;
+    Scanner streamIn = null;
+    String messaggioIn;
+    String messaggioOut;
+
     
     public Server(int porta){
         this.porta=porta;
         try{
             serverSocket = new ServerSocket(porta);
             System.out.println("1) SERVER IN ASCOLTO");
-        } catch(BindException ex) {
+        } catch(SecurityException ex) {
+            System.out.println("periferica non accessibile");
+        }catch(BindException ex) {
             System.out.println("porta occupata");
         } catch(IllegalArgumentException ex) {
              System.out.println("numero di porta non valido");
@@ -56,25 +67,27 @@ public class Server {
         }
         
         public void leggi() {
-        InputStream i;
-        try {
-            i = clientSocket.getInputStream();
-            i.read();
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
+           System.out.println("leggo il messaggio del client");
+           messaggioIn=streamIn.next();
+           System.out.println("messaggio del client"+ messaggioIn);
+           System.out.println("-----");
+
         
         }
         
         public void scrivi() {
-            OutputStream o;
-        try {
-             o = clientSocket.getOutputStream();
-             o.write(1);
-             o.flush();
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            try {
+                os=clientSocket.getOutputStream();
+                streamOut=new PrintWriter(os);
+                is= clientSocket.getInputStream();
+                streamIn=new Scanner(is);
+                System.out.println("mando il messaggio al client");
+                messaggioOut="ciao";
+                streamOut.println(messaggioOut);
+                streamOut.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         
         public void chiudi() {

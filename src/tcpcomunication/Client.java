@@ -7,9 +7,11 @@ package tcpcomunication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,12 @@ public class Client {
     String nome;
     String colore;
     Socket socket;
+    InputStream is;
+    OutputStream os;
+    PrintWriter streamOut = null;
+    Scanner streamIn = null;
+    String messaggioIn;
+    String messaggioOut;
     
     public Client(String nome){
     this.nome = nome;
@@ -30,6 +38,8 @@ public class Client {
         try {
             socket = new Socket(nomeServer, porta);
             System.out.println("1) CONNESSIONE AVVENUTA CON IL SERVER");
+        } catch(SecurityException ex) {
+            System.out.println("periferica non accessibile");
         } catch(ConnectException ex){
             System.out.println("errore connessione Server");
         } catch(UnknownHostException ex){
@@ -40,10 +50,10 @@ public class Client {
         }
   }
     public void leggi() {
-       InputStream i;
         try {
-            i = socket.getInputStream();
-            i.read();
+            os=socket.getOutputStream();
+            streamOut=new PrintWriter(os);
+            streamOut.flush();
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -51,10 +61,18 @@ public class Client {
     
     public void scrivi() {
          try {
-             OutputStream o = socket.getOutputStream();
-             o.write(1);
-             o.flush();
-        } catch (IOException ex) {
+             is= socket.getInputStream();
+             streamIn=new Scanner(is);
+             messaggioIn=streamIn.nextLine();
+
+             System.out.println("messaggio server:" + messaggioIn);
+             messaggioOut="Eccomi";
+             streamOut.println(messaggioOut);
+             streamOut.flush();
+        }
+         catch (UnknownHostException ex) {
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+         }catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
