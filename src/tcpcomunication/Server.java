@@ -67,6 +67,18 @@ public class Server {
         }
         
         public void leggi() {
+            try {
+                os=clientSocket.getOutputStream();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            streamOut=new PrintWriter(os);
+            try {
+                is= clientSocket.getInputStream();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            streamIn=new Scanner(is);
            System.out.println("leggo il messaggio del client");
            messaggioIn=streamIn.next();
            System.out.println("messaggio del client"+ messaggioIn);
@@ -82,7 +94,7 @@ public class Server {
                 is= clientSocket.getInputStream();
                 streamIn=new Scanner(is);
                 System.out.println("mando il messaggio al client");
-                messaggioOut="ciao";
+                messaggioOut="ciao\n\r";
                 streamOut.println(messaggioOut);
                 streamOut.flush();
             } catch (IOException e) {

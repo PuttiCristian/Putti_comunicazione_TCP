@@ -51,9 +51,10 @@ public class Client {
   }
     public void leggi() {
         try {
-            os=socket.getOutputStream();
-            streamOut=new PrintWriter(os);
-            streamOut.flush();
+            is=socket.getInputStream();
+            streamIn=new Scanner(is);
+            messaggioIn=streamIn.nextLine();
+            System.out.println("messaggio server:" + messaggioIn);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,14 +62,14 @@ public class Client {
     
     public void scrivi() {
          try {
-             is= socket.getInputStream();
-             streamIn=new Scanner(is);
-             messaggioIn=streamIn.nextLine();
-
-             System.out.println("messaggio server:" + messaggioIn);
+             os=socket.getOutputStream();
+             streamOut=new PrintWriter(os);
+             streamOut.flush();
              messaggioOut="Eccomi";
+             System.out.println(messaggioOut);
              streamOut.println(messaggioOut);
              streamOut.flush();
+             System.out.println(messaggioOut);
         }
          catch (UnknownHostException ex) {
              Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
