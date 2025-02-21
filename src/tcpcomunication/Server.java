@@ -35,13 +35,15 @@ public class Server {
     Scanner streamIn = null;
     String messaggioIn;
     String messaggioOut;
+    public static final String RED = "\u001B[31m";
+    public static final String RESET = "\u001B[0m";
 
     
     public Server(int porta){
         this.porta=porta;
         try{
             serverSocket = new ServerSocket(porta);
-            System.out.println("1) SERVER IN ASCOLTO");
+            System.out.println(RED + "1) SERVER IN ASCOLTO" + RESET);
         } catch(SecurityException ex) {
             System.out.println("periferica non accessibile");
         }catch(BindException ex) {
@@ -58,7 +60,7 @@ public class Server {
         public Socket attendi(){
         try {
             clientSocket = serverSocket.accept();
-            System.out.println("2) CONNESSIONE CON IL CLIENT AVVENUTA E DATA SOCKET CREATO");
+            System.out.println(RED + "2) CONNESSIONE CON IL CLIENT AVVENUTA E DATA SOCKET CREATO" + RESET);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("PROBLEMI DI CONNESSIONE CON IL CLIENT");
@@ -79,10 +81,10 @@ public class Server {
                 throw new RuntimeException(e);
             }
             streamIn=new Scanner(is);
-           System.out.println("leggo il messaggio del client");
+           System.out.println(RED + "leggo il messaggio del client" + RESET);
            messaggioIn=streamIn.next();
-           System.out.println("messaggio del client"+ messaggioIn);
-           System.out.println("-----");
+           System.out.println(RED + "messaggio del client"+ messaggioIn + RESET);
+           System.out.println(RED + "-----" + RESET);
 
         
         }
@@ -93,9 +95,9 @@ public class Server {
                 streamOut=new PrintWriter(os);
                 is= clientSocket.getInputStream();
                 streamIn=new Scanner(is);
-                System.out.println("mando il messaggio al client");
+                System.out.println(RED + "mando il messaggio al client" + RESET);
                 messaggioOut="ciao\n\r";
-                streamOut.println(messaggioOut);
+                streamOut.println(RED + messaggioOut+ RESET);
                 streamOut.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -105,7 +107,7 @@ public class Server {
         public void chiudi() {
         try {
             clientSocket.close();
-            System.out.println("5) chiusura comunicazione");
+            System.out.println(RED + "5) chiusura comunicazione" + RESET);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -29,6 +29,8 @@ public class Client {
     Scanner streamIn = null;
     String messaggioIn;
     String messaggioOut;
+    public static final String BLUE = "\u001B[34m";
+    public static final String RESET = "\u001B[0m";
     
     public Client(String nome){
     this.nome = nome;
@@ -37,7 +39,7 @@ public class Client {
     public void connetti(String nomeServer, int porta){
         try {
             socket = new Socket(nomeServer, porta);
-            System.out.println("1) CONNESSIONE AVVENUTA CON IL SERVER");
+            System.out.println(BLUE + "1) CONNESSIONE AVVENUTA CON IL SERVER" + RESET);
         } catch(SecurityException ex) {
             System.out.println("periferica non accessibile");
         } catch(ConnectException ex){
@@ -54,7 +56,7 @@ public class Client {
             is=socket.getInputStream();
             streamIn=new Scanner(is);
             messaggioIn=streamIn.nextLine();
-            System.out.println("messaggio server:" + messaggioIn);
+            System.out.println(BLUE + "messaggio server:" + messaggioIn + RESET);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,10 +68,9 @@ public class Client {
              streamOut=new PrintWriter(os);
              streamOut.flush();
              messaggioOut="Eccomi";
-             System.out.println(messaggioOut);
+             System.out.println(BLUE + messaggioOut + RESET);
              streamOut.println(messaggioOut);
              streamOut.flush();
-             System.out.println(messaggioOut);
         }
          catch (UnknownHostException ex) {
              Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +83,7 @@ public class Client {
        if(socket != null) 
            try {
                socket.close();
-               System.out.println("4) chiusura della connessione con il server");
+               System.out.println(BLUE + "4) chiusura della connessione con il server" + RESET);
        } catch (IOException ex) {
            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
        }
