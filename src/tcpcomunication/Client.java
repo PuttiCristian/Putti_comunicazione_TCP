@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author Cristian
  */
-public class Client {
+public class Client implements Runnable {
     String nome;
     String colore;
     Socket socket;
@@ -29,9 +29,22 @@ public class Client {
     Scanner streamIn = null;
     String messaggioIn;
     String messaggioOut;
+    String nomeServer;
+    int porta;
     
-    public Client(String nome) implements Runnable{
+    public Client(String nome, String nomeServer, int porta){
     this.nome = nome;
+    this.nomeServer = nomeServer;
+    this.porta = porta;
+    }
+
+    @Override
+    public void run() {
+        connetti(nomeServer, porta);
+        scrivi();
+        leggi();
+        chiudi();
+
     }
             
     public void connetti(String nomeServer, int porta){
@@ -87,5 +100,6 @@ public class Client {
            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
        }
     }
-    
+
+
 }

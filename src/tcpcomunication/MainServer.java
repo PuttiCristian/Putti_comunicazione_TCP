@@ -15,18 +15,13 @@ public class MainServer {
      */
     public static void main(String[] args) {
        Server s = new Server(50005);
-       Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Inserisci il numero di client con la quale si vuole instaurare una comunicazione TCP");
-        int nClient = scanner.nextInt();
-        scanner.close();
-       for(int i=0; i<nClient; i++) {
-       s.attendi();
-       s.leggi();
-       s.scrivi();
-       s.chiudi();
-    }
-      s.termina();
+       while(true) {
+           s.attendi();
+           s.leggi();
+           s.scrivi();
+           s.chiudi();
+           // s.termina();
+       }
     }
     
 }
