@@ -30,7 +30,7 @@ public class Client {
     String messaggioIn;
     String messaggioOut;
     
-    public Client(String nome){
+    public Client(String nome) implements Runnable{
     this.nome = nome;
     }
             
